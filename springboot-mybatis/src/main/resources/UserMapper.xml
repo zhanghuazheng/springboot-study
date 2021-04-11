@@ -1,0 +1,6 @@
+<sqlMap namespace = "user">
+    <sql id = "selectList" ResultType = "com.huazheng.pojo.User">
+        select * from user
+    </sql>
+
+</sqlMap>
