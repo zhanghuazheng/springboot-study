@@ -13,6 +13,7 @@
         <module>springboot-actuor</module>
         <module>springboot-mybatis</module>
         <module>huazheng-common</module>
+        <module>springboot-config</module>
     </modules>
 
     <parent>

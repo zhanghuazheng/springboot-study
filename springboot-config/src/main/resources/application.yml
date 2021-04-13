@@ -1,0 +1,14 @@
+server:
+  port: 8081
+zhz:
+  str: zhzzhz
+  num: 10
+  dnum: 20.22
+  birth: 2021/04/13 08:47:22
+  hoby:
+    - singer
+    - dance
+    - game
+  friend: [1,2,3,2,2]
+  map: {key1: 11,key2: 11,key3: ahk}
+
