@@ -1,12 +1,12 @@
 server:
   port: 8081
 zhz:
-  str: zhzzhz
-  num: 10
+  str: zhzzhz222
+  num: ${random.int(2,14)}
   dnum: 20.22
   birth: 2021/04/13 08:47:22
   hoby:
-    - singer
+    - singer33
     - dance
     - game
   friend: [1,2,3,2,2]
