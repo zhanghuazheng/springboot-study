@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huazheng.process.flow.dao.ProcProcessDao">
+
+    <!-- 通用查询结果列-->
+    <resultMap id="BaseResultMap" type="com.huazheng.process.flow.entity.ProcProcess">
+        <id column="id" property="id"/>
+        <result column="modified" property="modified"/>
+        <result column="created" property="created"/>
+        <result column="process_code" property="processCode"/>
+        <result column="process_name" property="processName"/>
+        <result column="apply_channel" property="applyChannel"/>
+        <result column="is_del" property="isDel"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		 modified, created, id, process_code, process_name, apply_channel, is_del
+	</sql>
+
+    <!-- 查询（根据主键ID查询） -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_proc_process
+        WHERE id = #{id} and is_del = 0
+    </select>
+
+    <!--删除：根据主键ID删除-->
+    <delete id="deleteById" parameterType="java.lang.Long">
+		 UPDATE t_proc_process
+		 SET 
+			 is_del = 1 
+		 WHERE id = #{id}
+	</delete>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.huazheng.process.flow.entity.ProcProcess">
+		 INSERT INTO t_proc_process
+ 		(process_code,process_name,apply_channel)
+		 VALUES 
+ 		(#{processCode},#{processName},#{applyChannel})
+	</insert>
+
+    <!-- 添加 （匹配有值的字段）-->
+    <insert id="insertSelective" parameterType="com.huazheng.process.flow.entity.ProcProcess">
+        INSERT INTO t_proc_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="processCode != null">
+                process_code,
+            </if>
+            <if test="processName != null">
+                process_name,
+            </if>
+            <if test="applyChannel != null">
+                apply_channel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="processCode != null">
+                #{processCode},
+            </if>
+            <if test="processName != null">
+                #{processName},
+            </if>
+            <if test="applyChannel != null">
+                #{applyChannel},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 修 改-->
+    <update id="updateByIdSelective" parameterType="com.huazheng.process.flow.entity.ProcProcess">
+        UPDATE t_proc_process
+        <set>
+            <if test="processCode != null">
+                process_code = #{processCode},
+            </if>
+            <if test="processName != null">
+                process_name = #{processName},
+            </if>
+            <if test="applyChannel != null">
+                apply_channel = #{applyChannel},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 查询所有流程 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_proc_process
+        WHERE is_del = 0
+    </select>
+
+    <!-- 查询所有流程 -->
+    <select id="selectByApplyChannel" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_proc_process
+        WHERE apply_channel=#{applyChannel} and is_del = 0
+    </select>
+
+</mapper>

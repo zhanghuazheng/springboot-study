@@ -56,4 +56,12 @@ public class Jdk8StreamTest {
            return x;
         }).forEach(System.out::println);
     }
+
+    @Test
+    public void longTest(){
+       long a = 0;
+        System.out.println(0-1);
+    }
+
+
 }

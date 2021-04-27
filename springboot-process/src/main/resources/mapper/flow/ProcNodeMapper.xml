@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huazheng.process.flow.dao.ProcNodeDao">
+
+	<!-- 通用查询结果列-->
+	<resultMap id="BaseResultMap" type="com.huazheng.process.flow.entity.ProcNode" >
+		<id column="id" property="id"/>
+		<result column="modified" property="modified"/>
+		<result column="created" property="created"/>
+		<result column="node_code" property="nodeCode"/>
+		<result column="node_name" property="nodeName"/>
+		<result column="node_url" property="nodeUrl"/>
+		<result column="node_desc" property="nodeDesc"/>
+		<result column="is_del" property="isDel"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		 modified, created, id, node_code, node_name, node_url, node_desc, is_del
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_proc_node
+		 WHERE id = #{id}  and is_del = 0
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteById" parameterType="java.lang.Long">
+		 UPDATE t_proc_node
+		 SET 
+			 is_del = 1 
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.huazheng.process.flow.entity.ProcNode">
+		 INSERT INTO t_proc_node
+ 		(node_code,node_name,node_url,node_desc) 
+		 VALUES 
+ 		(#{nodeCode},#{nodeName},#{nodeUrl},#{nodeDesc}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.huazheng.process.flow.entity.ProcNode">
+		 INSERT INTO t_proc_node
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="modified != null">
+				 modified,
+			</if>
+			<if test="created != null">
+				 created,
+			</if>
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="nodeCode != null">
+				 node_code,
+			</if>
+			<if test="nodeName != null">
+				 node_name,
+			</if>
+			<if test="nodeUrl != null">
+				 node_url,
+			</if>
+			<if test="nodeDesc != null">
+				 node_desc,
+			</if>
+			<if test="isDel != null">
+				 is_del,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="modified != null">
+				 #{modified},
+			</if>
+			<if test="created != null">
+				 #{created},
+			</if>
+			<if test="id != null">
+				 #{id},
+			</if>
+			<if test="node_code != null">
+				 #{nodeCode},
+			</if>
+			<if test="node_name != null">
+				 #{nodeName},
+			</if>
+			<if test="node_url != null">
+				 #{nodeUrl},
+			</if>
+			<if test="node_desc != null">
+				 #{nodeDesc},
+			</if>
+			<if test="is_del != null">
+				 #{isDel},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByIdSelective" parameterType="com.huazheng.process.flow.entity.ProcNode">
+		 UPDATE t_proc_node
+ 		 <set> 
+			<if test="modified != null">
+				 modified = #{modified},
+			</if>
+			<if test="created != null">
+				 created = #{created},
+			</if>
+			<if test="nodeCode != null">
+				 node_code = #{nodeCode},
+			</if>
+			<if test="nodeName != null">
+				 node_name = #{nodeName},
+			</if>
+			<if test="nodeUrl != null">
+				 node_url = #{nodeUrl},
+			</if>
+			<if test="nodeDesc != null">
+				 node_desc = #{nodeDesc},
+			</if>
+			<if test="isDel != null">
+				 is_del = #{isDel},
+			</if>
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+
+
+</mapper>
